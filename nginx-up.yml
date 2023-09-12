@@ -1,0 +1,6 @@
+---
+- name: Nginx is up
+  hosts: all
+  tasks:
+    - debug:
+        msg: "Nginx is up"

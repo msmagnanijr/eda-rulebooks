@@ -1,0 +1,24 @@
+---
+- name: Configure Nginx
+  hosts: all
+  vars:
+    nginx_state: "started"
+  gather_facts: false
+
+  tasks:
+    - name: Install Nginx
+      package:
+        name: nginx
+        state: present
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: "{{ nginx_state }}"
+      notify: Reload Nginx
+
+  handlers:
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded

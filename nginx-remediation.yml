@@ -1,0 +1,30 @@
+---
+- name: Manage Nginx and Firewall
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Ensure Nginx is installed
+      package:
+        name: nginx
+        state: present
+
+    - name: Ensure Nginx is started
+      service:
+        name: nginx
+        state: started
+
+    - name: Debug message
+      debug:
+        msg: "Website is down!"
+
+    - name: Ensure firewall openings are in place for HTTP
+      firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+        immediate: yes
+
+    - name: Restart Nginx webserver
+      service:
+        name: nginx
+        state: restarted
